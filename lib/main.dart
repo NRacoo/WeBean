@@ -9,14 +9,13 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      getPages: AppPage.list,
-      initialRoute: AppRoute.dashboard,
+      title: 'WeBean',
       debugShowCheckedModeBanner: false,
+      initialRoute: AppRoute.splash,
+      getPages: AppPage.list,
     );
   }
 }

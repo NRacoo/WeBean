@@ -1,22 +1,93 @@
 import 'package:flutter/material.dart';
+import 'package:webean/widgets/panen_card.dart';
 
-class DashboardScreen extends StatelessWidget{
-  const DashboardScreen({super.key});
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        color: Colors.white,
-        width: double.infinity,
-        height: double.infinity,
-        child:Text(
-          "WeBean",
-          style:TextStyle(
-            color:Colors.black,
-            fontSize: 24,
-          )
-        )
+      backgroundColor: Colors.grey[100],
+      body: SafeArea(
+        child: Column(
+          children: [
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(24),
+              decoration: const BoxDecoration(
+                color: Color(0xFF3E5F44),
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(200),
+                  bottomRight: Radius.circular(200),
+                ),
+              ),
+              child: Column(
+                children: [
+                  const SizedBox(height: 20),
+                  const Text(
+                    'Hai, (user)!',
+                    style: TextStyle(
+                      fontSize: 34,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontFamily: 'Poppins',
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  const Text(
+                    'Your Coffee Journey Starts here.',
+                    style: TextStyle(fontSize: 18, color: Colors.white),
+                  ),
+                  const SizedBox(height: 40),
+                  Positioned(
+                    bottom: -50,
+                    width: 200,
+                    height: 120,
+                    child: Center(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF5E936C),
+                          shape: BoxShape.circle,
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(24),
+                          child: Image.asset(
+                            "assets/images/bean.png",
+                            fit: BoxFit.contain,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                ],
+              ),
+            ),
+
+            Expanded(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: const Text(
+                        'Kualitas Panen',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    PeriodePanen()
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
