@@ -62,6 +62,22 @@ class PeriodePanen extends StatelessWidget {
               ],
             ),
           ),
+          Padding(
+            padding: const EdgeInsetsGeometry.only(left: 10, top:20, right:10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Kualitas Rendah',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w400
+                  ),
+                ),
+                ProgressBar(value: 0.5)
+              ],
+            ),
+            )
         ],
       ),
     );

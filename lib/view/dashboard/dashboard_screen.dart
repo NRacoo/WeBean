@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:webean/widgets/panen_card.dart';
+import 'package:webean/widgets/suhu_card.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -81,7 +82,28 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 10),
-                    PeriodePanen()
+                    PeriodePanen(),
+                    const SizedBox(height: 10),
+                    Row(
+                      children: [
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: const Text(
+                            'Suhu',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: SuhuCard( suhu: 14))
+                      ],
+                    )
                   ],
                 ),
               ),
