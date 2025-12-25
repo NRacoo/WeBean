@@ -1,6 +1,8 @@
 import 'package:get/route_manager.dart';
 import 'package:webean/route/app_route.dart';
 import 'package:webean/view/dashboard/dashboard_screen.dart';
+import 'package:webean/view/list/list_screen.dart';
+import 'package:webean/view/profile/profile_screen.dart';
 import 'package:webean/view/splash/splash_screen.dart';
 
 class AppPage {
@@ -12,6 +14,14 @@ class AppPage {
     GetPage(
       name:AppRoute.splash,
       page: () => const SplashScreen()
-    )
+    ),
+    GetPage(
+      name:AppRoute.profile,
+      page: () => const ProfileScreen()
+    ),
+    GetPage(
+      name:AppRoute.list,
+      page: () => const ListScreen()
+    ),
   ];
 }
