@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:webean/widgets/panen_card.dart';
 import 'package:webean/widgets/suhu_card.dart';
 import 'package:webean/widgets/kelembapan.dart';
-import 'package:webean/widgets/navigation.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -125,7 +124,6 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
             ),
-            CustomNavigationBar(currentIndex: 0)
           ],
         ),
       ),

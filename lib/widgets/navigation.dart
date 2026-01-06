@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:webean/route/app_route.dart';
+import 'package:webean/controller/getx.dart';
 
 class CustomNavigationBar extends StatelessWidget {
   final int currentIndex;
@@ -9,18 +9,7 @@ class CustomNavigationBar extends StatelessWidget {
 
   void _onTap(int index) {
     if (index == currentIndex) return;
-
-    switch (index) {
-      case 0:
-        Get.offNamed(AppRoute.dashboard);
-        break;
-      case 1:
-        Get.offNamed(AppRoute.list);
-        break;
-      case 2:
-        Get.offNamed(AppRoute.profile);
-        break;
-    }
+    Get.find<NavigationController>().changeIndex(index);
   }
 
   @override
@@ -37,7 +26,7 @@ class CustomNavigationBar extends StatelessWidget {
         children: [
           _navItems(Icons.home_outlined, 0),
           _navItems(Icons.list_alt_outlined, 1),
-          _navItems(Icons.person_2_outlined, 2)
+          _navItems(Icons.person_2_outlined, 2),
         ],
       ),
     );
@@ -50,14 +39,10 @@ class CustomNavigationBar extends StatelessWidget {
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
           color: currentIndex == index
-              ? Colors.white.withValues(alpha:0.15)
+              ? Colors.white.withValues(alpha: 0.15)
               : Colors.transparent,
         ),
-        child: Icon(
-          icon,
-          size: 28,
-          color: Colors.white
-        ),
+        child: Icon(icon, size: 28, color: Colors.white),
       ),
     );
   }
