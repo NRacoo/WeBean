@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:get/get.dart';
 import 'package:webean/route/app_route.dart';
+import 'package:webean/utils/secure_storage.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -10,31 +11,38 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-
 class _SplashScreenState extends State<SplashScreen> {
   @override
-  void initState(){
+  void initState() {
     super.initState();
-    Timer(const Duration(seconds: 3), (){
-      Get.offNamed(AppRoute.main);
-    });
+    _checkAuth();
+  }
+
+  Future<void> _checkAuth() async {
+    final token = await SecureStorage.getToken();
+
+    debugPrint('SPLASH TOKEN => $token');
+
+    await Future.delayed(const Duration(seconds: 1));
+
+    if (token != null) {
+      Get.offAllNamed(AppRoute.main);
+    } else {
+      Get.offAllNamed(AppRoute.login);
+    }
   }
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFF3E5F44),
-      body:Center(
+      body: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: Column(
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset(
-                'assets/images/webean.png',
-                width: 300,
-                height: 300,
-              ),
+              Image.asset('assets/images/webean.png', width: 300, height: 300),
               const SizedBox(height: 0),
               const Text(
                 'Step Shape Destinies',
@@ -43,12 +51,10 @@ class _SplashScreenState extends State<SplashScreen> {
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
                   fontFamily: 'Poppins',
-                  fontStyle: FontStyle.italic
+                  fontStyle: FontStyle.italic,
                 ),
               ),
-              const SizedBox(
-                height: 4,
-              ),
+              const SizedBox(height: 4),
               SizedBox(
                 width: 200,
                 child: ClipRRect(
@@ -61,10 +67,9 @@ class _SplashScreenState extends State<SplashScreen> {
                 ),
               ),
             ],
-          )
+          ),
         ),
-      )
+      ),
     );
   }
 }
-

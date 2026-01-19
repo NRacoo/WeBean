@@ -1,10 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:webean/utils/secure_storage.dart';
 import 'package:webean/widgets/panen_card.dart';
 import 'package:webean/widgets/suhu_card.dart';
 import 'package:webean/widgets/kelembapan.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreen();
+}
+
+class _HomeScreen extends State<HomeScreen> {
+  String username = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUsername();
+  }
+
+  Future<void> _loadUsername() async {
+    final storedUsername = await SecureStorage.getUsername();
+
+    if (storedUsername != null) {
+      setState(() {
+        username = storedUsername.contains('.')
+            ? storedUsername.split('.').first
+            : storedUsername;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,8 +54,8 @@ class HomeScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       const SizedBox(height: 20),
-                      const Text(
-                        'Hai, (user)!',
+                      Text(
+                        'Hai, ${username.isEmpty ? "user" : username}!',
                         style: TextStyle(
                           fontSize: 34,
                           fontWeight: FontWeight.bold,
@@ -129,4 +155,5 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
+  
 }
