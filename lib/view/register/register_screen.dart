@@ -56,23 +56,33 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Container(
-            padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              color: const Color(0xFF5E936C),
-              borderRadius: BorderRadius.circular(16),
-              boxShadow: const [
-                BoxShadow(
-                  color: Colors.black26,
-                  offset: Offset(0, 4),
-                  blurRadius: 10,
+      body: Stack(
+        children: [
+          Positioned.fill(
+            child: Image.asset('assets/images/login.png', fit: BoxFit.cover,)
+          ),
+
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(16),
+              child: Container(
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(32)
                 ),
-              ],
+                child: _registerForm(),
+              ),
             ),
-            child: Form(
+          )
+        ],
+      )
+    );
+  }
+
+  Widget _registerForm() {
+    return Form(
               key: _formkey,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -80,7 +90,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   const Text(
                     'Daftar Akun',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Colors.black,
                       fontWeight: FontWeight.bold,
                       fontSize: 24,
                     ),
@@ -108,7 +118,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       Text(
                         'Sudah punya akun?',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Colors.black,
                           fontWeight: FontWeight.w400,
                         ),
                       ),
@@ -120,7 +130,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         child: const Text(
                           'Masuk',
                           style: TextStyle(
-                            color: Colors.white,
+                            color: Colors.black,
                             decoration: TextDecoration.underline,
                           ),
                         ),
@@ -144,11 +154,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                 ],
               ),
-            ),
-          ),
-        ),
-      ),
-    );
+            );
   }
 
   Widget _input(
