@@ -82,7 +82,7 @@ class _LoginPageState extends State<LoginPage> {
                     passwordController,
                     "Password",
                     obsecure: true,
-                    min: 8,
+                    min: 3,
                   ),
 
                   const SizedBox(height: 12),
@@ -120,13 +120,15 @@ class _LoginPageState extends State<LoginPage> {
                     child: ElevatedButton(
                         onPressed: isLoading ? null : handleLogin , 
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.white,
+                          foregroundColor: Colors.black,
                           padding: const EdgeInsets.symmetric(vertical: 14),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12)
                           )
                         ),
-                      child: isLoading ? null : const Text('Login'),
+                      child: isLoading ? const CircularProgressIndicator(
+                        color: Color(0xFF5E936C),
+                      ) : const Text('Login'),
                     ),
                   )
                 ],
@@ -152,9 +154,20 @@ class _LoginPageState extends State<LoginPage> {
         decoration: InputDecoration(
           fillColor: Colors.white,
           filled: true,
-          labelText: label,
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+          labelText:label,
+          labelStyle: const TextStyle(
+            color: Colors.black
+          ),
+          enabledBorder:  OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10), 
+            borderSide: const BorderSide(color: Colors.black)
+          ),
+          focusedBorder:  OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10), 
+            borderSide: const BorderSide(color: Colors.black)
+          ),
         ),
+        
         validator: (value) {
           if (value == null || value.isEmpty) {
             return "$label wajib diisi";

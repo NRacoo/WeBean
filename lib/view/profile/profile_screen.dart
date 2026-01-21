@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:webean/model/profile_model.dart';
 import 'package:webean/route/app_route.dart';
+import 'package:webean/service/imagekit_service.dart';
 import 'package:webean/service/profile_service.dart';
 import 'package:webean/utils/secure_storage.dart';
 import 'package:webean/widgets/profile_card.dart';
@@ -15,6 +17,12 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   late Future<ProfileModel> profileFuture;
+
+  final ImagePicker picker = ImagePicker();
+
+  Future<XFile?> pickImage() async {
+    return await picker.pickImage(source: ImageSource.gallery);
+  }
 
   @override
   void initState() {
@@ -73,19 +81,70 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 color: Color(0xFF5E936C),
                                 shape: BoxShape.circle,
                               ),
-                              child: CircleAvatar(
-                                radius: 110,
-                                backgroundColor: const Color(0xFF5E936C),
-                                backgroundImage: profile.imageProfile != null
-                                    ? NetworkImage(profile.imageProfile!)
-                                    : null,
-                                child: profile.imageProfile == null
-                                    ? const Icon(
-                                        Icons.person,
-                                        size: 80,
+                              child: Stack(
+                                alignment: Alignment.center,
+                                children: [
+                                  GestureDetector(
+                                    onTap: () async {
+                                      try {
+                                        final file = await pickImage();
+                                        if (file == null) return;
+
+                                        final imageUrl = await ImagekitService()
+                                            .uploadImageKit(file);
+
+                                        if (imageUrl.isEmpty) {
+                                          throw Exception("gambar kosong");
+                                        }
+
+                                        await ImagekitService().saveImageUrl(
+                                          imageUrl,
+                                        );
+
+                                        setState(() {
+                                          profileFuture = _loadProfile();
+                                        });
+                                      } catch (e, s) {
+                                        debugPrint('UPLOAD ERROR: $e');
+                                        debugPrintStack(stackTrace: s);
+                                      }
+                                    },
+                                    child: CircleAvatar(
+                                      radius: 110,
+                                      backgroundColor: const Color(0xFF5E936C),
+                                      backgroundImage:
+                                          (profile.imageProfile != null &&
+                                              profile.imageProfile!.isNotEmpty)
+                                          ? NetworkImage(profile.imageProfile!)
+                                          : null,
+                                      child:
+                                          (profile.imageProfile == null ||
+                                              profile.imageProfile!.isEmpty)
+                                          ? const Icon(
+                                              Icons.person,
+                                              size: 80,
+                                              color: Colors.white,
+                                            )
+                                          : null,
+                                    ),
+                                  ),
+                                  Positioned(
+                                    bottom: 12,
+                                    right: 12,
+                                    child: Container(
+                                      padding: const EdgeInsets.all(8),
+                                      decoration: const BoxDecoration(
+                                        color: Colors.black54,
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: const Icon(
+                                        Icons.camera_alt,
                                         color: Colors.white,
-                                      )
-                                    : null,
+                                        size: 22,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ),
@@ -120,19 +179,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                         ),
                         const SizedBox(height: 10),
-                        ProfileCard(),
+                        ProfileCard(profile: profile),
                         const SizedBox(height: 10),
-                        ElevatedButton.icon(
-                          icon: const Icon(Icons.logout),
-                          label: const Text("Logout"),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF5E936C),
-                            foregroundColor: Colors.white,
+                        SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton.icon(
+                            icon: const Icon(Icons.logout),
+                            label: const Text("Logout"),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xFF5E936C),
+                              foregroundColor: Colors.white,
+                            ),
+                            onPressed: () async {
+                              await SecureStorage.logout();
+                              Get.offAllNamed(AppRoute.login);
+                            },
                           ),
-                          onPressed: () async {
-                            await SecureStorage.logout();
-                            Get.offAllNamed(AppRoute.login);
-                          },
                         ),
                       ],
                     ),

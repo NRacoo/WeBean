@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/route_manager.dart';
+import 'package:webean/route/app_route.dart';
 import 'package:webean/service/auth_service.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -39,12 +41,13 @@ class _RegisterPageState extends State<RegisterPage> {
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(const SnackBar(content: Text('Registrasi Berhasil')));
+      Get.offAllNamed(AppRoute.login);
     } catch (e) {
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(SnackBar(content: Text(e.toString())));
     } finally {
-      if(mounted){
+      if (mounted) {
         setState(() => isLoading = false);
       }
     }
@@ -53,28 +56,95 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Daftar Akun')),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Form(
-          key: _formkey,
-          child: ListView(
-            children: [
-              _input(usernameController, "Username"),
-              _input(passwordController, "Password", obsecure: true, min: 8),
-              _input(emailController, "Email", email: true),
-              _input(phoneController, "No. Hp(+62)"),
-              _input(addressController, "Alamat"),
-              _input(addressController, "Tanggal Lahir (YYYY-MM-DD)"),
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Container(
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: const Color(0xFF5E936C),
+              borderRadius: BorderRadius.circular(16),
+              boxShadow: const [
+                BoxShadow(
+                  color: Colors.black26,
+                  offset: Offset(0, 4),
+                  blurRadius: 10,
+                ),
+              ],
+            ),
+            child: Form(
+              key: _formkey,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text(
+                    'Daftar Akun',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 24,
+                    ),
+                  ),
 
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: isLoading ? null : handleRegister,
-                child: isLoading
-                    ? const CircularProgressIndicator()
-                    : const Text("Daftar"),
+                  const SizedBox(height: 24),
+
+                  _input(usernameController, "Username"),
+                  _input(
+                    passwordController,
+                    "Password",
+                    obsecure: true,
+                    min: 8,
+                  ),
+                  _input(emailController, "Email", email: true),
+                  _input(phoneController, "No. Hp(+62)"),
+                  _input(addressController, "Alamat"),
+                  _input(addressController, "Tanggal Lahir (YYYY-MM-DD)"),
+
+                  const SizedBox(height: 12),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Sudah punya akun?',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+
+                      GestureDetector(
+                        onTap: () {
+                          Get.offAllNamed(AppRoute.login);
+                        },
+                        child: const Text(
+                          'Masuk',
+                          style: TextStyle(
+                            color: Colors.white,
+                            decoration: TextDecoration.underline,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: isLoading ? null : handleRegister,
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.black,
+                      ),
+                      child: isLoading
+                          ? const CircularProgressIndicator(
+                            color: Color(0xFF5E936C),
+                          )
+                          : const Text('Daftar'),
+                    ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
       ),
@@ -95,7 +165,19 @@ class _RegisterPageState extends State<RegisterPage> {
         obscureText: obsecure,
         decoration: InputDecoration(
           labelText: label,
-          border: const OutlineInputBorder(),
+          fillColor: Colors.white,
+          filled: true,
+          labelStyle: const TextStyle(
+            color: Colors.black
+          ),
+          enabledBorder:  OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10), 
+            borderSide: const BorderSide(color: Colors.black)
+          ),
+          focusedBorder:  OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10), 
+            borderSide: const BorderSide(color: Colors.black)
+          ),
         ),
         validator: (value) {
           if (value == null || value.isEmpty) {
