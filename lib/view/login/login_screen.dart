@@ -51,6 +51,50 @@ class _LoginPageState extends State<LoginPage> {
             child: Image.asset('assets/images/login.png', fit: BoxFit.cover),
           ),
 
+          Positioned(
+            top: MediaQuery.of(context).padding.top + 12,
+            left: 16,
+            child: GestureDetector(
+              onTap: () => Get.back(),
+              child: Container(
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(Icons.arrow_back, color: Colors.black),
+              ),
+            ),
+          ),
+
+          Positioned(
+            right: 20,
+            bottom: 500,
+            left: 20,
+            child: Text(
+              '"A journey of a thousand miles begins with one step"',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 40,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+
+          Positioned(
+            left: 20,
+            right: 20,
+            bottom: 450,
+            child: const Text(
+              '-Lao Tzu',
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.w300,
+                fontSize: 20,
+              ),
+            ),
+          ),
+
           Align(
             alignment: Alignment.bottomCenter,
             child: SingleChildScrollView(
@@ -77,7 +121,7 @@ class _LoginPageState extends State<LoginPage> {
         mainAxisSize: MainAxisSize.min,
         children: [
           const Text(
-            'Login',
+            'Masuk',
             style: TextStyle(
               color: Colors.black,
               fontSize: 24,
@@ -104,7 +148,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
               GestureDetector(
                 onTap: () {
-                  Get.offAllNamed(AppRoute.register);
+                  Get.toNamed(AppRoute.register);
                 },
                 child: const Text(
                   'Daftar',
@@ -133,7 +177,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
               child: isLoading
                   ? const CircularProgressIndicator(color: Color(0xFF5E936C))
-                  : const Text('Login'),
+                  : const Text('Masuk'),
             ),
           ),
         ],

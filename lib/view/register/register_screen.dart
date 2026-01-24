@@ -59,7 +59,23 @@ class _RegisterPageState extends State<RegisterPage> {
       body: Stack(
         children: [
           Positioned.fill(
-            child: Image.asset('assets/images/login.png', fit: BoxFit.cover,)
+            child: Image.asset('assets/images/login.png', fit: BoxFit.cover),
+          ),
+
+          Positioned(
+            top: MediaQuery.of(context).padding.top + 12,
+            left: 16,
+            child: GestureDetector(
+              onTap: () => Get.back(),
+              child: Container(
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(Icons.arrow_back, color: Colors.black),
+              ),
+            ),
           ),
 
           Align(
@@ -70,91 +86,82 @@ class _RegisterPageState extends State<RegisterPage> {
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.circular(32)
+                  borderRadius: BorderRadius.circular(32),
                 ),
                 child: _registerForm(),
               ),
             ),
-          )
+          ),
         ],
-      )
+      ),
     );
   }
 
   Widget _registerForm() {
     return Form(
-              key: _formkey,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Text(
-                    'Daftar Akun',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 24,
-                    ),
-                  ),
+      key: _formkey,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Text(
+            'Daftar Akun',
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+              fontSize: 24,
+            ),
+          ),
 
-                  const SizedBox(height: 24),
+          const SizedBox(height: 24),
 
-                  _input(usernameController, "Username"),
-                  _input(
-                    passwordController,
-                    "Password",
-                    obsecure: true,
-                    min: 8,
-                  ),
-                  _input(emailController, "Email", email: true),
-                  _input(phoneController, "No. Hp(+62)"),
-                  _input(addressController, "Alamat"),
-                  _input(addressController, "Tanggal Lahir (YYYY-MM-DD)"),
+          _input(usernameController, "Username"),
+          _input(passwordController, "Password", obsecure: true, min: 8),
+          _input(emailController, "Email", email: true),
+          _input(phoneController, "No. Hp(+62)"),
+          _input(addressController, "Alamat"),
+          _input(addressController, "Tanggal Lahir (YYYY-MM-DD)"),
 
-                  const SizedBox(height: 12),
+          const SizedBox(height: 12),
 
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Sudah punya akun?',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-
-                      GestureDetector(
-                        onTap: () {
-                          Get.offAllNamed(AppRoute.login);
-                        },
-                        child: const Text(
-                          'Masuk',
-                          style: TextStyle(
-                            color: Colors.black,
-                            decoration: TextDecoration.underline,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: isLoading ? null : handleRegister,
-                      style: ElevatedButton.styleFrom(
-                        foregroundColor: Colors.black,
-                      ),
-                      child: isLoading
-                          ? const CircularProgressIndicator(
-                            color: Color(0xFF5E936C),
-                          )
-                          : const Text('Daftar'),
-                    ),
-                  ),
-                ],
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Sudah punya akun?',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w400,
+                ),
               ),
-            );
+
+              GestureDetector(
+                onTap: () {
+                  Get.toNamed(AppRoute.login);
+                },
+                child: const Text(
+                  'Masuk',
+                  style: TextStyle(
+                    color: Colors.black,
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
+              ),
+            ],
+          ),
+
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              onPressed: isLoading ? null : handleRegister,
+              style: ElevatedButton.styleFrom(foregroundColor: Colors.black),
+              child: isLoading
+                  ? const CircularProgressIndicator(color: Color(0xFF5E936C))
+                  : const Text('Daftar'),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   Widget _input(
@@ -173,16 +180,14 @@ class _RegisterPageState extends State<RegisterPage> {
           labelText: label,
           fillColor: Colors.white,
           filled: true,
-          labelStyle: const TextStyle(
-            color: Colors.black
+          labelStyle: const TextStyle(color: Colors.black),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: const BorderSide(color: Colors.black),
           ),
-          enabledBorder:  OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10), 
-            borderSide: const BorderSide(color: Colors.black)
-          ),
-          focusedBorder:  OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10), 
-            borderSide: const BorderSide(color: Colors.black)
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: const BorderSide(color: Colors.black),
           ),
         ),
         validator: (value) {

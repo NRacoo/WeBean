@@ -10,7 +10,7 @@ class PeriodePanen extends StatelessWidget {
       width: double.infinity,
       height: 200,
       decoration: BoxDecoration(
-        color: Color(0xFF5E936C),
+        color: Color(0xFF235347),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Column(

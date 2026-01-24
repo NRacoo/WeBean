@@ -5,6 +5,7 @@ import 'package:webean/route/app_route.dart';
 import 'package:webean/view/login/login_screen.dart';
 import 'package:webean/view/register/register_screen.dart';
 import 'package:webean/view/splash/splash_screen.dart';
+import 'package:webean/view/welcome/welcome_screen.dart';
 
 class AppPage {
   static var list = [
@@ -24,6 +25,10 @@ class AppPage {
     GetPage(
     name: AppRoute.register, 
     page: () => const RegisterPage()
+    ),
+    GetPage(
+    name: AppRoute.welcome, 
+    page: () => const WelcomeScreen()
     )
   ];
 }

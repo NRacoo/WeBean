@@ -28,14 +28,14 @@ class _SplashScreenState extends State<SplashScreen> {
     if (token != null) {
       Get.offAllNamed(AppRoute.main);
     } else {
-      Get.offAllNamed(AppRoute.login);
+      Get.offAllNamed(AppRoute.welcome);
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF3E5F44),
+      backgroundColor: Color(0xFF0B2B26),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),

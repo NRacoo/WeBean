@@ -130,7 +130,7 @@ class _EditProfile extends State<ProfileCard> {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Color(0xFF5E936C),
+        color: Color(0xFF235347),
         borderRadius: BorderRadius.circular(16),
       ),
       child: Form(
