@@ -5,7 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:webean/utils/secure_storage.dart';
 
 class ImagekitService {
-  static const String baseUrl = "http://localhost:3000";
+  static const String baseUrl = "https://webean-user-service.vercel.app";
 
   Future<Map<String, dynamic>> getImageKitAuth() async {
     final token = await SecureStorage.getToken();

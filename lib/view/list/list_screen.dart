@@ -25,7 +25,7 @@ class ListScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 20),
-                PeriodePanen(),
+                PanenCard(),
                 const SizedBox(height: 16),
                 KelembapanCard(kelembapan: 65, status: 'Humidity'),
                 const SizedBox(height: 16),

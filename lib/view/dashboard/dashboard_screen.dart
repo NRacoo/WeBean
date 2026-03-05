@@ -113,7 +113,7 @@ class _HomeScreen extends State<HomeScreen> {
                       ),
                     ),
                     const SizedBox(height: 10),
-                    PeriodePanen(),
+                    PanenCard(),
                     const SizedBox(height: 10),
                     Row(
                       children: [

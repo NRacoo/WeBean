@@ -34,6 +34,7 @@ class _RegisterPageState extends State<RegisterPage> {
         email: emailController.text,
         phone: phoneController.text,
         address: addressController.text,
+        birth: birthController.text
       );
 
       if (!mounted) return;
@@ -119,7 +120,7 @@ class _RegisterPageState extends State<RegisterPage> {
           _input(emailController, "Email", email: true),
           _input(phoneController, "No. Hp(+62)"),
           _input(addressController, "Alamat"),
-          _input(addressController, "Tanggal Lahir (YYYY-MM-DD)"),
+          _birthInput(birthController, "Tanggal Lahir"),
 
           const SizedBox(height: 12),
 
@@ -202,6 +203,47 @@ class _RegisterPageState extends State<RegisterPage> {
           }
           return null;
         },
+      ),
+    );
+  }
+
+  Widget _birthInput(TextEditingController controller, String label) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 12),
+      child: TextFormField(
+        controller: controller,
+        readOnly: true,
+        decoration: InputDecoration(
+          labelText: label,
+          fillColor: Colors.white,
+          filled: true,
+          suffixIcon: const Icon(Icons.calendar_today),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: const BorderSide(color: Colors.black),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: const BorderSide(color: Colors.black),
+          ),
+        ),
+        onTap: () async {
+          final pickedDate = await showDatePicker(
+            context: context,
+            initialDate: DateTime(2000),
+            firstDate: DateTime(1950),
+            lastDate: DateTime.now(),
+          );
+
+          if (pickedDate != null) {
+            final formatted =
+                "${pickedDate.year}-${pickedDate.month.toString().padLeft(2, '0')}-${pickedDate.day.toString().padLeft(2, '0')}";
+
+            birthController.text = formatted;
+          }
+        },
+        validator: (value) =>
+            value == null || value.isEmpty ? "Tanggal lahir wajib diisi" : null,
       ),
     );
   }

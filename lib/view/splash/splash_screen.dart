@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:get/get.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:webean/route/app_route.dart';
 import 'package:webean/utils/secure_storage.dart';
 
@@ -23,9 +24,9 @@ class _SplashScreenState extends State<SplashScreen> {
 
     debugPrint('SPLASH TOKEN => $token');
 
-    await Future.delayed(const Duration(seconds: 1));
+   // await Future.delayed(const Duration(seconds: 1));
 
-    if (token != null) {
+    if (token != null && JwtDecoder.isExpired(token)) {
       Get.offAllNamed(AppRoute.main);
     } else {
       Get.offAllNamed(AppRoute.welcome);

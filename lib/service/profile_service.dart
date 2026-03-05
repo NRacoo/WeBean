@@ -7,7 +7,7 @@ import 'package:webean/route/app_route.dart';
 import 'package:webean/utils/secure_storage.dart';
 
 class ProfileService {
-  static const String baseUrl = "http://localhost:3000";
+  static const String baseUrl = "https://webean-user-service.vercel.app";
 
   Future<ProfileModel> getProfile({
     required String token,
@@ -21,13 +21,15 @@ class ProfileService {
       },
     );
 
+    if (response.body.isEmpty) {
+      throw FormatException('empty response');
+    }
     final res = jsonDecode(response.body);
-    debugPrint('GET PROFILE RESPONSE: $res');
 
     if (response.statusCode == 401) {
       await SecureStorage.logout();
 
-      Get.offAllNamed(AppRoute.login);
+      Get.offAllNamed(AppRoute.welcome);
 
       throw Exception('Session expired. Please login again');
     }
@@ -56,8 +58,7 @@ class ProfileService {
       body: jsonEncode(data),
     );
 
-    final resp = jsonDecode(response.body);
-    debugPrint('response update: $resp');
+    debugPrint('response update: $response.body');
 
     if (response.statusCode != 201) {
       final res = jsonDecode(response.body);
